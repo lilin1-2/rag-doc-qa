@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+requests
+pydantic
+streamlit
+chromadb<0.5.0
+sentence-transformers
+pypdf
+langchain-text-splitters
+numpy<2.0
