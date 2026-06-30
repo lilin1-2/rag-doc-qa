@@ -21,7 +21,7 @@ from pydantic import BaseModel, Field
 from rag_core import build_collection, get_collection, ask
 
 # API 认证
-def verify_api_key(x_api_key: str = None):
+def verify_api_key(x_api_key: str = Header(None)):
     if not x_api_key or x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="API Key 无效或缺失")
     return True
