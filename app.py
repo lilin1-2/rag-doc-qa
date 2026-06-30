@@ -19,6 +19,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
+DEEPSEEK_URL = os.getenv("DEEPSEEK_URL")
 
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
