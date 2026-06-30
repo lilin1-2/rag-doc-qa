@@ -6,13 +6,25 @@ RAG 核心引擎 —— 文档加载、向量化、检索、生成
 import os
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler("app.log", encoding="utf-8"), logging.StreamHandler()],
+)
+logger = logging.getLogger(__name__)
+
 import requests
 from sentence_transformers import SentenceTransformer
 import chromadb
 from pypdf import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from config import API_KEY, DEEPSEEK_URL
+from dotenv import load_dotenv
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+DEEPSEEK_URL = os.getenv("DEEPSEEK_URL")
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
