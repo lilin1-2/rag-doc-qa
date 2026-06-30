@@ -6,7 +6,7 @@ RAG 文档问答服务 —— FastAPI 接口层
   POST /rag/ask       文档问答（输入文本直接问答）
   POST /rag/upload    上传文档文本，自动建向量库
 """
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, HTTPException, Request, Depends, Header
 import logging
 logging.basicConfig(
     level=logging.INFO,
@@ -14,6 +14,11 @@ logging.basicConfig(
     handlers=[logging.FileHandler("app.log", encoding="utf-8"), logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,6 +37,8 @@ app = FastAPI(
     description="基于 Chroma + DeepSeek 的 RAG 问答 API",
     version="1.0.0",
 )
+
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 collection = None
 
